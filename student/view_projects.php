@@ -43,10 +43,10 @@ $userId = $_SESSION['user_id'];
                                     Description
                                 </th>
                                 <th>
-                                    Filename
+                                    Members
                                 </th>
                                 <th>
-                                    Members
+                                    Supervisors
                                 </th>
                                 <th>
                                     Submitted at
@@ -61,7 +61,7 @@ $userId = $_SESSION['user_id'];
                         </thead>
                         <tbody>
                             <?php
-                            $result = mysqli_query($conn, "SELECT * from studentsprojects WHERE student_id ='$userId'");
+                            $result = mysqli_query($conn, "SELECT * from studentsprojects WHERE student_id ='$userId' ORDER BY created_at DESC");
                             if (mysqli_num_rows($result) > 0) {
                                 $count = 1;
                                 while ($row = mysqli_fetch_assoc($result)) {
@@ -69,13 +69,33 @@ $userId = $_SESSION['user_id'];
                                     echo "<td>" . $count++ . "</td>";
                                     echo "<td>" . $row['title'] . "</td>";
                                     echo "<td>" . $row['description'] . "</td>";
-                                    echo "<td>" . $row['file_name'] . "</td>";
                             ?>
                                     <td>
                                         <?php
-                                        $membersResult = mysqli_query($conn, "SELECT * FROM project_members WHERE project_id ='" . $row['id'] . "'");
-                                        $membersCount = mysqli_num_rows($membersResult);
-                                        echo $membersCount;
+                                        $membersResult = mysqli_query($conn, "SELECT * FROM project_members,students WHERE project_id ='" . $row['id'] . "' AND project_members.student_id = students.id");
+                                        if (mysqli_num_rows($membersResult) > 0) {
+                                            while ($membersCount = mysqli_fetch_assoc($membersResult)) {
+                                                echo $membersCount["firstname"] . " " . $membersCount["lastname"] . ", ";
+                                            }
+                                        } else {
+                                            echo "No members found.";
+                                        }
+                                        ?>
+                                    </td>
+                                    <td>
+                                        <?php
+                                        $supervisorsResult = mysqli_query($conn, "SELECT * FROM supervisor_project_assignment WHERE project_id ='" . $row['id'] . "'");
+                                        if (mysqli_num_rows($supervisorsResult) > 0) {
+
+                                            while ($supervisorCount = mysqli_fetch_assoc($supervisorsResult)) {
+                                                $supervisorId = $supervisorCount['supervisor_id'];
+                                                $supervisorResult = mysqli_query($conn, "SELECT * FROM users WHERE id = '$supervisorId'");
+                                                $supervisorRow = mysqli_fetch_assoc($supervisorResult);
+                                                echo $supervisorRow['names'] . ", ";
+                                            }
+                                        } else {
+                                            echo "No supervisor yet";
+                                        }
                                         ?>
                                     </td>
                                     <?php

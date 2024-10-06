@@ -62,7 +62,21 @@ include './php/connect.php';
                 $loginError = 'Invalid password';
             }
         } else {
-            $loginError = 'Email not found';
+            $checkHOD = mysqli_query($conn, "SELECT * from users WHERE email = '$email'");
+            if (mysqli_num_rows($checkHOD) < 1) {
+                $loginError = 'Email not found';
+            } else {
+                $user = mysqli_fetch_array($checkHOD);
+                if ($user["password"] === $password) {
+                    session_start();
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user'] = $user;
+                    header("Location: ./admin/dashboard.php");
+                    exit();
+                } else {
+                    $loginError = 'Invalid password';
+                }
+            }
         }
     }
     ?>
@@ -146,7 +160,7 @@ include './php/connect.php';
             document.querySelector('.text-danger').innerHTML = '';
             document.querySelector('.text-success').innerHTML = '';
         }
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const registerToast = document.getElementById('registerToast');
             const loginToast = document.getElementById('loginToast');
 
