@@ -33,6 +33,7 @@ a {
     width: 60px;
     height: 60px;
     border-radius: 50%;
+    border: 2px solid #212529;
 }
 
 .dashboard-header {
@@ -61,4 +62,9 @@ a {
 
 .action_button:hover {
     color: #fff;
+}
+.logout {
+    border-radius: 10px;
+    color: #dee2e6;
+    font-weight: bold;
 }

@@ -58,7 +58,6 @@ if (isset($_GET['project_id'])) {
     <title>Add Project Member</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
-
 </head>
 
 <body>

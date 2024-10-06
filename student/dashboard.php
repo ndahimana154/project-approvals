@@ -30,61 +30,81 @@ $userId = $_SESSION['user_id'];
                 </div>
                 <div class="container mt-4">
                     <div class="row">
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <?php
-                                    $sql = mysqli_query($conn, "SELECT * FROM  studentsProjects WHERE student_id = $userId");
-                                    ?>
-                                    <h5 class="card-title">Total Projects Submitted</h5>
-                                    <p class="card-text">You have submitted <strong>
-                                            <?php echo mysqli_num_rows($sql) ?>
-                                        </strong> projects recently.</p>
-                                    <a href="view_projects.php" class="btn btn-primary">View Projects</a>
+                        <div class="col-md-8">
+                            <div class="row">
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <?php
+                                            $sql = mysqli_query($conn, "SELECT * FROM studentsProjects WHERE student_id = $userId");
+                                            ?>
+                                            <h5 class="card-title">Total Projects Submitted</h5>
+                                            <p class="card-text">You have submitted <strong>
+                                                    <?php echo mysqli_num_rows($sql) ?>
+                                                </strong> projects recently.</p>
+                                            <a href="view_projects.php" class="btn btn-primary">View Projects</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-6">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Another Card Title</h5>
+                                            <p class="card-text">Some other important information can go here.</p>
+                                            <a href="#" class="btn btn-primary">Action</a>
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="col-md-12">
+                                    <div class="card">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Additional Information</h5>
+                                            <p class="card-text">You can place any relevant information here.</p>
+                                            <a href="#" class="btn btn-primary">Action</a>
+                                        </div>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
+                        
+                        <!-- Recent Members Section on the Right -->
+                        <div class="col-md-4">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Recent members</h5>
+                                    <h5 class="card-title">Recent Members</h5>
+
                                     <ul class="list-group">
-                                        <li class="list-group-item">Feature 1</li>
-                                        <li class="list-group-item">Feature 2</li>
-                                        <li class="list-group-item">Feature 3</li>
-                                        <li class="list-group-item">Feature 4</li>
+                                        <?php
+                                        $sql = "
+                                            SELECT students.firstname AS member_firstname,students.lastname AS member_lastname, studentsprojects.title AS project_title 
+                                            FROM project_members 
+                                            JOIN students ON project_members.student_id = students.id 
+                                            JOIN studentsProjects ON project_members.project_id = studentsProjects.id 
+                                            WHERE studentsProjects.student_id = $userId
+                                        ";
+                                        $result = mysqli_query($conn, $sql);
+
+                                        if (mysqli_num_rows($result) > 0) {
+                                            while ($row = mysqli_fetch_assoc($result)) {
+                                                echo "<li class='list-group-item'>";
+                                                echo "<strong>Project:</strong> " . htmlspecialchars($row['project_title']) . "<br>";
+                                                echo "<strong>Member:</strong> " . htmlspecialchars($row['member_firstname']) . " " . htmlspecialchars($row['member_lastname']);
+                                                echo "</li>";
+                                            }
+                                        } else {
+                                            echo "<li class='list-group-item'>No members found for your projects.</li>";
+                                        }
+                                        ?>
                                     </ul>
                                 </div>
                             </div>
                         </div>
-
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Another Card Title</h5>
-                                    <p class="card-text">Some other important information can go here.</p>
-                                    <a href="#" class="btn btn-primary">Action</a>
-                                </div>
-                            </div>
-                        </div>
-
-                        <div class="col-md-6">
-                            <div class="card">
-                                <div class="card-body">
-                                    <h5 class="card-title">Additional Information</h5>
-                                    <p class="card-text">You can place any relevant information here.</p>
-                                    <a href="#" class="btn btn-primary">Action</a>
-                                </div>
-                            </div>
-                        </div>
-
+                        
                     </div>
                 </div>
             </div>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"
         integrity="sha384-Ksv6CTTT9Y+Y9vEdhbnc/kolc5B9k0SkOvR6aUkhhPj2HptP0V3sCVZlAlC1Omp"
         crossorigin="anonymous"></script>
