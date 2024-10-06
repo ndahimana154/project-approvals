@@ -3,6 +3,10 @@ body {
     font-size: 14px;
 }
 
+a {
+    text-decoration: none;
+}
+
 .sidebar {
     background-color: #ffffff;
     height: 100vh;
@@ -17,9 +21,6 @@ body {
     display: block;
 }
 
-.sidebar a:hover {
-    background-color: #e9ecef;
-}
 
 .profile-section {
     display: flex;
@@ -41,10 +42,23 @@ body {
     padding: 10px;
     margin-top: 10px;
 }
+
 .dashboard-header h1 {
     font-size: 24px;
 }
 
 .card {
     margin: 20px 0;
+}
+
+.action_button {
+    color: white;
+    border: none;
+    padding: 5px 5px;
+    border-radius: 4px;
+    cursor: pointer;
+}
+
+.action_button:hover {
+    color: #fff;
 }

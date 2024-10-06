@@ -18,5 +18,5 @@
     <a href="view_projects.php">View Projects</a>
     <a href="project_list.php">Project List</a>
     <a href="settings.php">Settings</a>
-    <a href="../php/logout.php" class="text-danger">Logout</a>
+    <a href="../php/logout.php" class="btn btn-danger text-white logout">Logout</a>
 </div>

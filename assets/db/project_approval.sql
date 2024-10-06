@@ -2,10 +2,10 @@
 -- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: Oct 06, 2024 at 02:39 AM
--- Server version: 10.4.28-MariaDB
--- PHP Version: 8.2.4
+-- Host: 127.0.0.1
+-- Generation Time: Oct 06, 2024 at 03:42 AM
+-- Server version: 10.4.32-MariaDB
+-- PHP Version: 8.0.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -20,6 +20,28 @@ SET time_zone = "+00:00";
 --
 -- Database: `project_approval`
 --
+
+-- --------------------------------------------------------
+
+--
+-- Table structure for table `project_members`
+--
+
+CREATE TABLE `project_members` (
+  `id` int(11) NOT NULL,
+  `project_id` int(11) NOT NULL,
+  `student_id` int(11) NOT NULL,
+  `role` varchar(50) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data for table `project_members`
+--
+
+INSERT INTO `project_members` (`id`, `project_id`, `student_id`, `role`) VALUES
+(1, 2, 5, 'COntent creator'),
+(2, 2, 5, 'COntent creator'),
+(3, 2, 7, 'COntent creator');
 
 -- --------------------------------------------------------
 
@@ -53,37 +75,51 @@ INSERT INTO `students` (`id`, `firstname`, `lastname`, `email`, `phone`, `passwo
 -- --------------------------------------------------------
 
 --
--- Table structure for table `studentsProjects`
+-- Table structure for table `studentsprojects`
 --
 
-CREATE TABLE `studentsProjects` (
+CREATE TABLE `studentsprojects` (
   `id` int(11) NOT NULL,
   `title` varchar(255) NOT NULL,
   `description` text NOT NULL,
   `file_name` text NOT NULL,
   `student_id` int(11) NOT NULL,
-  `status` varchar(255) NOT NULL DEFAULT 'pending'
+  `status` varchar(255) NOT NULL DEFAULT 'pending',
+  `created_at` varchar(255) NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
--- Dumping data for table `studentsProjects`
+-- Dumping data for table `studentsprojects`
 --
 
-INSERT INTO `studentsProjects` (`id`, `title`, `description`, `file_name`, `student_id`, `status`) VALUES
-(1, 'dfW', 'JNIUN', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending'),
-(2, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending'),
-(3, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending'),
-(4, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending'),
-(5, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending'),
-(6, 'efoij', 'iojiofjvio', 'user.png', 3, 'pending'),
-(7, 'sdowij', 'iojiojio', 'user.png', 3, 'pending'),
-(8, 'kljm', 'ojmoijoio', 'Screenshot 2024-10-06 at 01.47.18.png', 3, 'pending'),
-(9, 'dwjn', 'inijio', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'pending'),
-(10, 'doij', 'oijiojoi', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'pending');
+INSERT INTO `studentsprojects` (`id`, `title`, `description`, `file_name`, `student_id`, `status`, `created_at`) VALUES
+(1, 'dfW', 'JNIUN', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending', '2024-10-06 02:56:08'),
+(2, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending', '2024-10-06 02:56:08'),
+(3, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending', '2024-10-06 02:56:08'),
+(4, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending', '2024-10-06 02:56:08'),
+(5, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'pending', '2024-10-06 02:56:08'),
+(6, 'efoij', 'iojiofjvio', 'user.png', 3, 'pending', '2024-10-06 02:56:08'),
+(7, 'sdowij', 'iojiojio', 'user.png', 3, 'pending', '2024-10-06 02:56:08'),
+(8, 'kljm', 'ojmoijoio', 'Screenshot 2024-10-06 at 01.47.18.png', 3, 'pending', '2024-10-06 02:56:08'),
+(9, 'dwjn', 'inijio', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'pending', '2024-10-06 02:56:08'),
+(10, 'doij', 'oijiojoi', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'pending', '2024-10-06 02:56:08'),
+(11, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'pending', '2024-10-06 02:56:26'),
+(12, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'pending', '2024-10-06 02:57:05'),
+(13, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'pending', '2024-10-06 02:57:09'),
+(14, 'ewfe', 'eew', '6701e0f253fee8.60724094_27603 KWIZERA Parfait Assignement_DBMS.pdf', 3, 'pending', '2024-10-06 02:59:30'),
+(15, 'ewfre', 'erfer', '6701e15a225be5.28444404_27603 KWIZERA Parfait Assignement_DBMS.pdf', 3, 'pending', '2024-10-06 03:01:14');
 
 --
 -- Indexes for dumped tables
 --
+
+--
+-- Indexes for table `project_members`
+--
+ALTER TABLE `project_members`
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `project_id` (`project_id`),
+  ADD KEY `student_id` (`student_id`);
 
 --
 -- Indexes for table `students`
@@ -92,9 +128,9 @@ ALTER TABLE `students`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `studentsProjects`
+-- Indexes for table `studentsprojects`
 --
-ALTER TABLE `studentsProjects`
+ALTER TABLE `studentsprojects`
   ADD PRIMARY KEY (`id`),
   ADD KEY `sdifugnrefini` (`student_id`);
 
@@ -103,25 +139,38 @@ ALTER TABLE `studentsProjects`
 --
 
 --
+-- AUTO_INCREMENT for table `project_members`
+--
+ALTER TABLE `project_members`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+
+--
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
 
 --
--- AUTO_INCREMENT for table `studentsProjects`
+-- AUTO_INCREMENT for table `studentsprojects`
 --
-ALTER TABLE `studentsProjects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=11;
+ALTER TABLE `studentsprojects`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=16;
 
 --
 -- Constraints for dumped tables
 --
 
 --
--- Constraints for table `studentsProjects`
+-- Constraints for table `project_members`
 --
-ALTER TABLE `studentsProjects`
+ALTER TABLE `project_members`
+  ADD CONSTRAINT `project_members_ibfk_1` FOREIGN KEY (`project_id`) REFERENCES `studentsprojects` (`id`) ON DELETE CASCADE,
+  ADD CONSTRAINT `project_members_ibfk_2` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE;
+
+--
+-- Constraints for table `studentsprojects`
+--
+ALTER TABLE `studentsprojects`
   ADD CONSTRAINT `sdifugnrefini` FOREIGN KEY (`student_id`) REFERENCES `students` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
 COMMIT;
 
