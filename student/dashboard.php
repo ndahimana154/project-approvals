@@ -26,7 +26,7 @@ $userId = $_SESSION['user_id'];
             <?php include "../components/studentsSidebar.php" ?>
             <div class="col-md-10">
                 <div class="dashboard-header">
-                    <h1 class="text-center">Student's dashboard</h1>
+                    <h1 class="">Student's dashboard</h1>
                 </div>
                 <div class="container mt-4">
                     <div class="row">
@@ -48,7 +48,7 @@ $userId = $_SESSION['user_id'];
                         <div class="col-md-6">
                             <div class="card">
                                 <div class="card-body">
-                                    <h5 class="card-title">Most Used Features</h5>
+                                    <h5 class="card-title">Recent members</h5>
                                     <ul class="list-group">
                                         <li class="list-group-item">Feature 1</li>
                                         <li class="list-group-item">Feature 2</li>

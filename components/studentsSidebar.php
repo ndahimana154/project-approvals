@@ -13,7 +13,8 @@
         </div>
     </div>
     <hr>
-    <a href="add_project.php"></a>
+    <a href="dashboard.php">Dashboard</a>
+    <a href="add_project.php">Add project</a>
     <a href="view_projects.php">View Projects</a>
     <a href="project_list.php">Project List</a>
     <a href="settings.php">Settings</a>
