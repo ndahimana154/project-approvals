@@ -1,4 +1,3 @@
-<!-- Toast Notification for Register -->
 <div class="position-fixed top-0 end-0 p-3" style="z-index: 11; margin-top: 20px;">
     <div id="registerToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
@@ -15,7 +14,6 @@
     </div>
 </div>
 
-<!-- Toast Notification for Login -->
 <div class="position-fixed top-0 end-0 p-3" style="z-index: 11; margin-top: 20px;">
     <div id="loginToast" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
         <div class="toast-header">
