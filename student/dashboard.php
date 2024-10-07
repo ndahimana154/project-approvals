@@ -32,7 +32,6 @@ $userId = $_SESSION['user_id'];
                 </div>
                 <div class="container">
                     <div class="row">
-                        <!-- Projects Summary Section -->
                         <div class="col-md-8">
                             <div class="row">
                                 <div class="col-md-6 mb-3">
@@ -48,57 +47,35 @@ $userId = $_SESSION['user_id'];
                                         </div>
                                     </div>
                                 </div>
-                                <!-- Additional Info Section -->
-                                <div class="col-md-6 mb-3">
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title">Other Information</h5>
-                                            <p class="card-text">Add important details here.</p>
-                                            <a href="#" class="btn btn-primary">Action</a>
-                                        </div>
-                                    </div>
-                                </div>
-                                <!-- Optional Section -->
-                                <div class="col-md-12 mb-3">
-                                    <div class="card shadow-sm">
-                                        <div class="card-body">
-                                            <h5 class="card-title">More Info</h5>
-                                            <p class="card-text">You can display more details here if needed.</p>
-                                            <a href="#" class="btn btn-primary">Learn More</a>
-                                        </div>
-                                    </div>
-                                </div>
                             </div>
-                        </div>
-
-                        <!-- Recent Members Section -->
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                                <div class="card-body">
-                                    <h5 class="card-title">Recent Members</h5>
-                                    <ul class="list-group list-group-flush">
-                                        <?php
-                                        $sql = "
+                            <div class="col-md-4">
+                                <div class="card shadow-sm">
+                                    <div class="card-body">
+                                        <h5 class="card-title">Recent Members</h5>
+                                        <ul class="list-group list-group-flush">
+                                            <?php
+                                            $sql = "
                                             SELECT students.firstname, students.lastname, studentsProjects.title 
                                             FROM project_members 
                                             JOIN students ON project_members.student_id = students.id 
                                             JOIN studentsProjects ON project_members.project_id = studentsProjects.id 
                                             WHERE studentsProjects.student_id = $userId
                                         ";
-                                        $result = mysqli_query($conn, $sql);
+                                            $result = mysqli_query($conn, $sql);
 
-                                        if (mysqli_num_rows($result) > 0) {
-                                            while ($row = mysqli_fetch_assoc($result)) {
-                                                echo "<li class='list-group-item'>";
-                                                echo "<strong>Project:</strong> " . htmlspecialchars($row['title']) . "<br>";
-                                                echo "<strong>Member:</strong> " . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['lastname']);
-                                                echo "</li>";
+                                            if (mysqli_num_rows($result) > 0) {
+                                                while ($row = mysqli_fetch_assoc($result)) {
+                                                    echo "<li class='list-group-item'>";
+                                                    echo "<strong>Project:</strong> " . htmlspecialchars($row['title']) . "<br>";
+                                                    echo "<strong>Member:</strong> " . htmlspecialchars($row['firstname']) . " " . htmlspecialchars($row['lastname']);
+                                                    echo "</li>";
+                                                }
+                                            } else {
+                                                echo "<li class='list-group-item'>No members found for your projects.</li>";
                                             }
-                                        } else {
-                                            echo "<li class='list-group-item'>No members found for your projects.</li>";
-                                        }
-                                        ?>
-                                    </ul>
+                                            ?>
+                                        </ul>
+                                    </div>
                                 </div>
                             </div>
                         </div>
