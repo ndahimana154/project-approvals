@@ -1,0 +1,262 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Student Progress Chat</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <style>
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f2f5fa;
+        }
+
+        .chat-container {
+            max-width: 900px;
+            margin: 50px auto;
+            padding: 20px;
+            height: 80vh;
+            overflow-y: auto;
+            border-radius: 10px;
+            background-color: white;
+            box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1);
+            position: relative;
+        }
+
+        .message {
+            margin-bottom: 20px;
+            display: flex;
+            flex-direction: column;
+            max-width: 60%;
+        }
+
+        .student-message {
+            align-self: flex-start;
+        }
+
+        .supervisor-message {
+            align-self: flex-end;
+        }
+
+        .bubble {
+            padding: 12px 18px;
+            border-radius: 18px;
+            box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .student-bubble {
+            background-color: #f1f1f1;
+            color: #333;
+        }
+
+        .supervisor-bubble {
+            background-color: #007bff;
+            color: white;
+        }
+
+        .time {
+            font-size: 12px;
+            color: #888;
+            margin-top: 8px;
+        }
+
+        .input-area {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            max-width: 900px;
+            padding: 20px;
+            background: #fff;
+            display: flex;
+            flex-direction: column;
+            border-top: 1px solid #ddd;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+        }
+
+        .input-area .editor {
+            width: 100%;
+            padding: 12px;
+            border: 1px solid #ddd;
+            border-radius: 25px;
+            outline: none;
+            box-shadow: inset 0 2px 3px rgba(0, 0, 0, 0.1);
+            min-height: 50px;
+            overflow-y: auto;
+        }
+
+        .input-area .editor:focus {
+            border-color: #007bff;
+            box-shadow: 0 0 6px rgba(0, 123, 255, 0.25);
+        }
+
+        .input-area button {
+            padding: 12px;
+            border: none;
+            background-color: #007bff;
+            color: white;
+            border-radius: 25px;
+            box-shadow: 0 2px 5px rgba(0, 123, 255, 0.25);
+            transition: background-color 0.3s ease;
+            margin-top: 10px;
+        }
+
+        .input-area button:hover {
+            background-color: #0056b3;
+        }
+
+        .input-area button:active {
+            background-color: #00408b;
+        }
+
+        .format-buttons {
+            display: flex;
+            gap: 10px;
+            margin-bottom: 10px;
+        }
+
+        .format-buttons button {
+            background-color: #f8f9fa;
+            color: #495057;
+            border: 1px solid #ced4da;
+            border-radius: 5px;
+            padding: 8px 12px;
+            cursor: pointer;
+            transition: background-color 0.3s ease;
+        }
+
+        .format-buttons button:hover {
+            background-color: #e2e6ea;
+        }
+
+        /* Color picker */
+        .color-picker {
+            width: 30px;
+            height: 30px;
+            border: none;
+            border-radius: 50%;
+            cursor: pointer;
+        }
+
+        /* Mobile responsiveness */
+        @media (max-width: 768px) {
+            .chat-container {
+                height: 70vh;
+            }
+
+            .input-area {
+                flex-direction: column;
+                padding: 15px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="container">
+        <h1 class="mt-4 text-center">Student Progress Chat</h1>
+
+        <div class="chat-container" id="chat-container">
+            <!-- Messages will go here -->
+        </div>
+
+        <div class="input-area">
+            <div class="format-buttons">
+                <button onclick="formatText('bold')">Bold</button>
+                <button onclick="formatText('italic')">Italic</button>
+                <button onclick="formatText('underline')">Underline</button>
+                <button onclick="formatText('insertOrderedList')">OL</button>
+                <button onclick="formatText('insertUnorderedList')">UL</button>
+                <button onclick="promptForLink()">Link</button>
+                <button onclick="promptForImage()">Image</button>
+                <input type="color" class="color-picker" title="Text Color" onchange="setTextColor(this.value)">
+                <input type="color" class="color-picker" title="Background Color" onchange="setBackgroundColor(this.value)">
+            </div>
+            <div 
+                class="editor" 
+                contenteditable="true" 
+                id="messageInput" 
+                placeholder="Enter your progress or comment..."
+                aria-label="Enter message">
+            </div>
+            <button onclick="sendMessage()">Send</button>
+        </div>
+    </div>
+
+    <script>
+        const chatContainer = document.getElementById('chat-container');
+        const messageInput = document.getElementById('messageInput');
+
+        function sendMessage() {
+            const messageText = messageInput.innerHTML.trim();
+            if (!messageText) return;
+
+            const messageBubble = document.createElement('div');
+            messageBubble.classList.add('message', 'student-message');
+
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            messageBubble.innerHTML = `
+                <div class="bubble student-bubble">
+                    ${messageText}
+                    <div class="time">Student | ${time}</div>
+                </div>
+            `;
+
+            chatContainer.appendChild(messageBubble);
+            messageInput.innerHTML = '';
+
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+
+            setTimeout(simulateSupervisorResponse, 1500);
+        }
+
+        function simulateSupervisorResponse() {
+            const supervisorMessage = document.createElement('div');
+            supervisorMessage.classList.add('message', 'supervisor-message');
+
+            const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+
+            supervisorMessage.innerHTML = `
+                <div class="bubble supervisor-bubble">
+                    Great work! Keep up the progress.
+                    <div class="time">Supervisor | ${time}</div>
+                </div>
+            `;
+
+            chatContainer.appendChild(supervisorMessage);
+            chatContainer.scrollTop = chatContainer.scrollHeight;
+        }
+
+        function formatText(command) {
+            document.execCommand(command, false, null);
+            messageInput.focus();
+        }
+
+        function promptForLink() {
+            const url = prompt("Enter the URL:");
+            if (url) {
+                document.execCommand('createLink', false, url);
+            }
+        }
+
+        function promptForImage() {
+            const imageUrl = prompt("Enter the image URL:");
+            if (imageUrl) {
+                document.execCommand('insertImage', false, imageUrl);
+            }
+        }
+
+        function setTextColor(color) {
+            document.execCommand('foreColor', false, color);
+        }
+
+        function setBackgroundColor(color) {
+            document.execCommand('hiliteColor', false, color);
+        }
+    </script>
+
+</body>
+
+</html>

@@ -18,17 +18,19 @@ $user = $_SESSION['user']
         </div>
     </div>
     <hr>
+    <a href="dashboard.php">Dashboard</a>
     <?php
     if ($user["role"] === 'admin') {
     ?>
-        <a href="dashboard.php">Dashboard</a>
         <a href="projects_list.php">Project List</a>
         <a href="new_supervisor.php">New supervisor</a>
         <a href="supervisors_list.php">Supervisors</a>
         <a href="assignSupervisor.php">Supervisors assignment</a>
     <?php
     } else {
-        echo "CHeck";
+    ?>
+        <a href="supervisors_projects_list.php">Projects list</a>
+    <?php
     }
     ?>
 
