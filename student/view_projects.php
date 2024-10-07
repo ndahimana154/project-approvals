@@ -16,7 +16,8 @@ $userId = $_SESSION['user_id'];
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Student Dashboard - Project approvals</title>
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css" integrity="sha512-Kc323vGBEqzTmouAECnVceyQqyqdsSiqLQISBL29aUW4U/M7pSPA/gEUZQqv1cwx4OnYxTxve5UMg5GT6L4JJg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
     <link rel="stylesheet" type="text/css" href="../assets/css/styles.css">
 </head>
@@ -112,11 +113,7 @@ $userId = $_SESSION['user_id'];
                                             class="action_button btn btn-success">
                                             <i class="fa fa-plus-circle"></i>
                                         </a>
-                                        <a href="view_project_members.php?project_id=<?php echo $row['id']; ?>"
-                                            title="View Project Members"
-                                            class="action_button btn btn-info">
-                                            <i class="fa fa-eye"></i>
-                                        </a>
+                                        <a href="track_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-info">Track Progress</a>
                                     </td>
                             <?php
                                     echo "</tr>";
