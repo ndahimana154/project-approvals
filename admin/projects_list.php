@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 session_start();
 include "../php/connect.php";
 
-// Check if the user is logged in
 if (!$_SESSION['user_id']) {
     header("Location:../index.php");
     exit();
@@ -12,7 +11,6 @@ if (!$_SESSION['user_id']) {
 
 $userId = $_SESSION['user_id'];
 
-// Handle project rejection
 if (isset($_GET['action']) && $_GET['action'] == 'reject' && isset($_GET['project_id'])) {
     $projectId = $_GET['project_id'];
     $query = "UPDATE studentsprojects SET status = 'Rejected' WHERE id = '$projectId'";
@@ -29,7 +27,6 @@ if (isset($_GET['action']) && $_GET['action'] == 'reject' && isset($_GET['projec
     }
 }
 
-// Handle project acceptance
 if (isset($_GET['action']) && $_GET['action'] == 'accept' && isset($_GET['project_id'])) {
     $projectId = $_GET['project_id'];
     $query = "UPDATE studentsprojects SET status = 'Accepted' WHERE id = '$projectId'";
@@ -48,10 +45,8 @@ if (isset($_GET['action']) && $_GET['action'] == 'accept' && isset($_GET['projec
 
 function formatDate($date)
 {
-    // Create a DateTime object from the provided date
     $dateTime = new DateTime($date);
 
-    // Get the day and add the appropriate suffix (st, nd, rd, th)
     $day = $dateTime->format('j');
     if ($day == 1 || $day == 21 || $day == 31) {
         $daySuffix = 'st';
@@ -63,17 +58,13 @@ function formatDate($date)
         $daySuffix = 'th';
     }
 
-    // Get the abbreviated month and convert to lowercase
     $month = strtolower($dateTime->format('m'));
 
-    // Get the last three digits of the year
     $year = substr($dateTime->format('Y'), -3);
 
-    // Get the hours and minutes
-    $hours = $dateTime->format('H'); // 24-hour format
-    $minutes = $dateTime->format('i'); // minutes with leading zero
-
-    // Combine the components
+    $hours = $dateTime->format('H');
+    $minutes = $dateTime->format('i'); 
+    
     return $day . $daySuffix . '.' . $month . '.' . $year . ' ' . $hours . 'h:' . $minutes;
 }
 
@@ -176,7 +167,6 @@ function formatDate($date)
         </div>
     </div>
 
-    <!-- Toast for displaying feedback -->
     <div class="toast-container position-fixed bottom-0 end-0 p-3">
         <div id="toast" class="toast align-items-center text-bg-primary border-0" role="alert" aria-live="assertive" aria-atomic="true">
             <div class="d-flex">
@@ -188,13 +178,11 @@ function formatDate($date)
         </div>
     </div>
 
-    <!-- Keep the Assign Supervisor modal -->
     <?php
     $result = mysqli_query($conn, "SELECT *,studentsprojects.id as id FROM studentsprojects,students WHERE students.id = studentsprojects.student_id");
     if (mysqli_num_rows($result) > 0) {
         while ($row = mysqli_fetch_assoc($result)) {
     ?>
-            <!-- Assign Supervisor Modal -->
             <div class="modal fade" id="assignModal<?php echo $row['id']; ?>" tabindex="-1" aria-labelledby="assignModalLabel" aria-hidden="true">
                 <div class="modal-dialog">
                     <div class="modal-content">

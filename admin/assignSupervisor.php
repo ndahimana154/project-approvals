@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 session_start();
 include "../php/connect.php";
 
-// Check if user is logged in
 if (!$_SESSION['user_id']) {
     header("Location:../index.php");
     exit();
@@ -17,14 +16,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $supervisorId = $_POST['supervisor_id'];
     $projectId = $_POST['project_id'];
 
-    // Check if the supervisor is already assigned to the project
     $checkQuery = "SELECT * FROM supervisor_project_assignment WHERE supervisor_id = '$supervisorId' AND project_id = '$projectId'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
     if (mysqli_num_rows($checkResult) > 0) {
         $message = 'This supervisor is already assigned to this project.';
     } else {
-        // Insert assignment into database
         $insertQuery = "INSERT INTO supervisor_project_assignment (supervisor_id, project_id) VALUES ('$supervisorId', '$projectId')";
         if (mysqli_query($conn, $insertQuery)) {
             $message = 'Supervisor assigned to the project successfully.';
@@ -56,14 +53,12 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     <h1>Assign Supervisor to Project</h1>
                 </div>
                 <div class="container mt-4">
-                    <!-- Display any message (success or error) -->
                     <?php if (!empty($message)): ?>
                         <div class="alert alert-info">
                             <?php echo $message; ?>
                         </div>
                     <?php endif; ?>
 
-                    <!-- Form for assigning supervisor to a project -->
                     <form action="" method="POST">
                         <div class="mb-3">
                             <label for="supervisor_id" class="form-label">Select Supervisor</label>
@@ -93,7 +88,6 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     </form>
                 </div>
 
-                <!-- Table for displaying supervisor assignments -->
                 <div class="container mt-5">
                     <h2>Current Assignments</h2>
                     <table class="table table-striped">

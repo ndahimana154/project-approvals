@@ -4,7 +4,6 @@ ini_set('display_errors', 1);
 session_start();
 include "../php/connect.php";
 
-// Check if user is logged in
 if (!$_SESSION['user_id']) {
     header("Location:../index.php");
     exit();
@@ -12,7 +11,6 @@ if (!$_SESSION['user_id']) {
 
 $userId = $_SESSION['user_id'];
 
-// Fetch current user information
 $query = mysqli_query($conn, "SELECT * FROM users WHERE id = '$userId'");
 $user = mysqli_fetch_assoc($query);
 
