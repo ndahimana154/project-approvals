@@ -30,13 +30,24 @@ if (!$student) {
         </div>
     </div>
     <hr>
-    <a href="dashboard.php">Dashboard</a>
-    <a href="add_project.php">Add project</a>
-    <a href="view_projects.php">Project List</a>
-    <a href="settings.php">Settings</a>
+    <a href="dashboard.php">
+        <i class="fa fa-tachometer-alt" style="margin-right: 5px;"></i>
+        Dashboard
+    </a>
+    <a href="add_project.php">
+        <i class="fa fa-plus" style="margin-right: 5px;"></i>
+        Add Project
+    </a>
+    <a href="view_projects.php">
+        <i class="fa fa-list" style="margin-right: 5px;"></i>
+        Project List
+    </a>
+    <a href="settings.php">
+        <i class="fa fa-cog" style="margin-right: 5px;"></i>
+        Settings
+    </a>
     <a href="../php/logout.php" class="logout bg-danger" style="border-radius: 8px; padding: 10px; color: white; text-decoration: none;">
         <i class="fa fa-sign-out" style="margin-right: 5px;"></i>
         Logout
     </a>
-
 </div>

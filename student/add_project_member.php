@@ -10,29 +10,28 @@ if (!$_SESSION['user_id']) {
 }
 
 $message = "";
-$messageType = ""; // Variable to hold the type of message (success or error)
+$messageType = "";
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $projectId = mysqli_real_escape_string($conn, $_POST['project_id']);
     $studentId = mysqli_real_escape_string($conn, $_POST['student_id']);
     $role = mysqli_real_escape_string($conn, $_POST['role']);
 
-    // Check if the student is already a member of the project
     $checkQuery = "SELECT * FROM project_members WHERE project_id = '$projectId' AND student_id = '$studentId'";
     $checkResult = mysqli_query($conn, $checkQuery);
 
     if (mysqli_num_rows($checkResult) > 0) {
         $message = "Error: This student is already a member of the project.";
-        $messageType = "error"; // Set message type to error
+        $messageType = "error";
     } else {
         $sql = "INSERT INTO project_members (project_id, student_id, role) VALUES ('$projectId', '$studentId', '$role')";
 
         if (mysqli_query($conn, $sql)) {
             $message = "Project member added successfully!";
-            $messageType = "success"; // Set message type to success
+            $messageType = "success";
         } else {
             $message = "Error: " . mysqli_error($conn);
-            $messageType = "error"; // Set message type to error
+            $messageType = "error";
         }
     }
 }
@@ -40,7 +39,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 $students = [];
 if (isset($_GET['project_id'])) {
     $projectId = mysqli_real_escape_string($conn, $_GET['project_id']);
-    $query = "SELECT id, email FROM students"; // Adjust this query as needed
+    $query = "SELECT id, email FROM students";
     $result = mysqli_query($conn, $query);
 
     while ($row = mysqli_fetch_assoc($result)) {
@@ -112,21 +111,19 @@ if (isset($_GET['project_id'])) {
         const studentOptions = document.getElementById('studentList').options;
 
         emailInput.addEventListener('input', function() {
-            // Find the selected option in the datalist
             for (let option of studentOptions) {
                 if (option.value === emailInput.value) {
-                    studentIdInput.value = option.dataset.id; // Set the student ID
+                    studentIdInput.value = option.dataset.id;
                     return;
                 }
             }
-            studentIdInput.value = ''; // Clear the student ID if no match
+            studentIdInput.value = '';
         });
 
-        // Show the toast if there's a message
         <?php if (!empty($message)): ?>
             const toastEl = document.getElementById('liveToast');
             const toast = new bootstrap.Toast(toastEl);
-            toast.show(); // Show the toast
+            toast.show();
         <?php endif; ?>
     </script>
 </body>

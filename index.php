@@ -62,7 +62,21 @@ include './php/connect.php';
                 $loginError = 'Invalid password';
             }
         } else {
-            $loginError = 'Email not found';
+            $checkHOD = mysqli_query($conn, "SELECT * from users WHERE email = '$email'");
+            if (mysqli_num_rows($checkHOD) < 1) {
+                $loginError = 'Email not found';
+            } else {
+                $user = mysqli_fetch_array($checkHOD);
+                if ($user["password"] === $password) {
+                    session_start();
+                    $_SESSION['user_id'] = $user['id'];
+                    $_SESSION['user'] = $user;
+                    header("Location: ./admin/dashboard.php");
+                    exit();
+                } else {
+                    $loginError = 'Invalid password';
+                }
+            }
         }
     }
     ?>
@@ -77,6 +91,23 @@ include './php/connect.php';
             <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
         </div>
     </header>
+
+    <!-- User Guidance Section -->
+    <div class="container my-5">
+        <h2>Welcome to the Project Approval System</h2>
+        <p>
+            This system is designed to facilitate the management and approval of various projects within the organization.
+            Users can register as students or administrators to access different functionalities based on their roles.
+        </p>
+        <h3>How to Use the System</h3>
+        <ol>
+            <li><strong>Registration:</strong> Click on the "Register" button to create a new account. Fill out the registration form with your personal details, including your first name, last name, email, phone number, and password.</li>
+            <li><strong>Login:</strong> After registering, you can log in using your email and password by clicking on the "Login" button.</li>
+            <li><strong>Dashboard:</strong> Once logged in, you will have access to your dashboard, where you can view and manage projects based on your role (student or admin).</li>
+            <li><strong>Support:</strong> If you encounter any issues, please reach out to the support team for assistance.</li>
+        </ol>
+    </div>
+
     <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -116,6 +147,7 @@ include './php/connect.php';
             </div>
         </div>
     </div>
+
     <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
         <div class="modal-dialog">
             <div class="modal-content">
@@ -139,6 +171,7 @@ include './php/connect.php';
             </div>
         </div>
     </div>
+
     <?php include "./components/toasts.php" ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
     <script>
@@ -146,7 +179,7 @@ include './php/connect.php';
             document.querySelector('.text-danger').innerHTML = '';
             document.querySelector('.text-success').innerHTML = '';
         }
-        document.addEventListener('DOMContentLoaded', function () {
+        document.addEventListener('DOMContentLoaded', function() {
             const registerToast = document.getElementById('registerToast');
             const loginToast = document.getElementById('loginToast');
 
@@ -161,6 +194,11 @@ include './php/connect.php';
             <?php endif; ?>
         });
     </script>
+
+    <footer class="text-center mt-5 mb-3">
+        <p>&copy; <?php echo date("Y"); ?> Project Approval System. All rights reserved.</p>
+        <p>Developed by Rugwiro</p>
+    </footer>
 </body>
 
 </html>
