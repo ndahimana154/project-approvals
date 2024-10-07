@@ -153,7 +153,7 @@ function formatDate($date)
                                         }
                                         if ($row['status'] === 'Accepted') {
                                         ?>
-                                            <button class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?php echo $row['id']; ?>">Assign Supervisor</button>
+                                            <a href="viewproject_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?php echo $row['id']; ?>">Track progress</a>
                                         <?php
                                         }
                                         ?>

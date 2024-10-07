@@ -71,7 +71,7 @@ $userId = $_SESSION['user_id']; // Get the supervisor's user ID from the session
                                     echo "<td>" . $row['assigned_date'] . "</td>";
                             ?>
                                     <td>
-                                        <a href="viewproject_progress.php?id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">View progress</a>
+                                        <a href="viewproject_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">View progress</a>
 
                                     </td>
                             <?php
