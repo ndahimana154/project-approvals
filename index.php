@@ -1,9 +1,5 @@
 <?php
-error_reporting(E_ALL);
-ini_set('display_errors', 1);
-
 include './php/connect.php';
-
 ?>
 
 <!DOCTYPE html>
@@ -14,191 +10,215 @@ include './php/connect.php';
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Homepage - Project Approval System</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: rgba(255, 193, 7, 0.1);
+            margin: 0;
+            padding: 0;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .full-height {
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+        }
+
+        header {
+            flex: 1;
+            display: flex;
+            flex-direction: row;
+            padding: 20px 0;
+            position: absolute;
+            top: 0;
+            left: 0;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 100;
+            width: 100%;
+        }
+
+        header .logo {
+            flex: 1;
+            padding: 10px;
+            padding-top: 0;
+        }
+
+        header .logo a {
+            text-decoration: none;
+            color: #fff;
+            font-size: 22px;
+            font-weight: bold;
+        }
+
+        header .buttons {
+            padding-right: 20px;
+        }
+
+        .carousel-container {
+            flex: 2;
+            display: flex;
+            justify-content: center;
+        }
+
+        .carousel {
+            width: 100%;
+            height: 100%;
+        }
+
+        .carousel-inner img {
+            object-fit: cover;
+            height: 100%;
+        }
+
+        .carousel-caption {
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            color: #fff;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.7);
+        }
+
+        .btn-outline-primary:hover,
+        .btn-outline-danger:hover,
+        .btn-outline-success:hover {
+            background-color: #f8f9fa;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            color: #fff;
+        }
+
+        .btn-outline-primary:hover {
+            background-color: #007bff;
+            border-color: #007bff;
+        }
+
+        .btn-outline-danger:hover {
+            background-color: #dc3545;
+            border-color: #dc3545;
+        }
+
+        .btn-outline-success:hover {
+            background-color: #28a745;
+            border-color: #28a745;
+        }
+
+        footer {
+            background-color: #f8f9fa;
+            padding: 20px;
+            font-size: 0.9rem;
+            margin-top: auto;
+        }
+
+        .card-deck {
+            margin-top: 20px;
+            padding: 20px;
+        }
+
+        .card {
+            margin-bottom: 20px;
+        }
+
+        .card-img-top {
+            height: 200px;
+            object-fit: cover;
+        }
+    </style>
 </head>
 
-<body style="background-color: rgba(255, 193, 7, 0.2);">
-    <?php
+<body>
 
-    $registerError = $registerSuccess = $loginError = '';
-    $firstName = $lastName = $email = $phoneNumber = '';
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['register'])) {
-        $firstName = $_POST['firstName'];
-        $lastName = $_POST['lastName'];
-        $email = $_POST['email'];
-        $phoneNumber = $_POST['phoneNumber'];
-        $password = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-        $checkEmailQuery = "SELECT * FROM students WHERE email = '$email'";
-        $result = mysqli_query($conn, $checkEmailQuery);
-
-        if (mysqli_num_rows($result) > 0) {
-            $registerError = 'Email already exists';
-        } else {
-            $insertQuery = "INSERT INTO students (firstname, lastname, email, phone, password) VALUES ('$firstName', '$lastName', '$email', '$phoneNumber', '$password')";
-            if (mysqli_query($conn, $insertQuery)) {
-                $registerSuccess = 'Registration successful';
-            } else {
-                $registerError = 'Registration failed';
-            }
-        }
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['login'])) {
-        $email = $_POST['email'];
-        $password = $_POST['password'];
-
-        $checkUserQuery = "SELECT * FROM students WHERE email = '$email'";
-        $result = mysqli_query($conn, $checkUserQuery);
-        if (mysqli_num_rows($result) > 0) {
-            $user = mysqli_fetch_assoc($result);
-            if (password_verify($password, $user['password'])) {
-                session_start();
-                $_SESSION['user_id'] = $user['id'];
-                $_SESSION['user'] = $user;
-                header("Location: ./student/dashboard.php");
-                exit();
-            } else {
-                $loginError = 'Invalid password';
-            }
-        } else {
-            $checkHOD = mysqli_query($conn, "SELECT * from users WHERE email = '$email'");
-            if (mysqli_num_rows($checkHOD) < 1) {
-                $loginError = 'Email not found';
-            } else {
-                $user = mysqli_fetch_array($checkHOD);
-                if ($user["password"] === $password) {
-                    session_start();
-                    $_SESSION['user_id'] = $user['id'];
-                    $_SESSION['user'] = $user;
-                    header("Location: ./admin/dashboard.php");
-                    exit();
-                } else {
-                    $loginError = 'Invalid password';
-                }
-            }
-        }
-    }
-    ?>
-    <header class="text-center py-5">
-        <div class="title">
-            <p class="lead">Coding is today's language of creativity</p>
-            <h1>Project Approval System</h1>
+    <div class="full-height">
+        <?php
+        include("./components/outheader.php");
+        ?>
+        <div class="carousel-container">
+            <div id="carouselExampleIndicators" class="carousel slide w-100" data-bs-ride="carousel">
+                <div class="carousel-indicators">
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="0" class="active" aria-current="true"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="1"></button>
+                    <button type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide-to="2"></button>
+                </div>
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="https://images.pexels.com/photos/9242849/pexels-photo-9242849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 1">
+                        <div class="carousel-caption">
+                            <h3>Streamlined Project Approvals</h3>
+                            <p>Efficiently manage and approve student projects with ease.</p>
+                            <a href="student-login.php" class="btn btn-primary btn-lg mx-2" style="min-width: 150px;">Student Login</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.pexels.com/photos/7868838/pexels-photo-7868838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 2">
+                        <div class="carousel-caption">
+                            <h3>Secure and Easy Access</h3>
+                            <p>Admins and students can access the system with secure login options.</p>
+                            <a href="admin-login.php" class="btn btn-danger btn-lg mx-2" style="min-width: 150px;">Admin Login</a>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 3">
+                        <div class="carousel-caption">
+                            <h3>Register New Students</h3>
+                            <p>Students can register and submit projects for quick approval.</p>
+                            <a href="register.php" class="btn btn-success btn-lg mx-2" style="min-width: 150px;">Register</a>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control-prev" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="prev">
+                    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Previous</span>
+                </button>
+                <button class="carousel-control-next" type="button" data-bs-target="#carouselExampleIndicators" data-bs-slide="next">
+                    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+                    <span class="visually-hidden">Next</span>
+                </button>
+            </div>
         </div>
-        <div class="buttons mt-4">
-            <button class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#registerModal"
-                onclick="clearModal()">Register</button>
-            <button class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#loginModal">Login</button>
-        </div>
-    </header>
 
-    <!-- User Guidance Section -->
-    <div class="container my-5">
-        <h2>Welcome to the Project Approval System</h2>
-        <p>
-            This system is designed to facilitate the management and approval of various projects within the organization.
-            Users can register as students or administrators to access different functionalities based on their roles.
-        </p>
-        <h3>How to Use the System</h3>
-        <ol>
-            <li><strong>Registration:</strong> Click on the "Register" button to create a new account. Fill out the registration form with your personal details, including your first name, last name, email, phone number, and password.</li>
-            <li><strong>Login:</strong> After registering, you can log in using your email and password by clicking on the "Login" button.</li>
-            <li><strong>Dashboard:</strong> Once logged in, you will have access to your dashboard, where you can view and manage projects based on your role (student or admin).</li>
-            <li><strong>Support:</strong> If you encounter any issues, please reach out to the support team for assistance.</li>
-        </ol>
     </div>
 
-    <div class="modal fade" id="registerModal" tabindex="-1" aria-labelledby="registerModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="registerModalLabel">Register</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+    <div class="container card-deck">
+        <div class="row">
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.pexels.com/photos/7841853/pexels-photo-7841853.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="Card image 1">
+                    <div class="card-body">
+                        <h5 class="card-title">Admin portal</h5>
+                        <p class="card-text">Access your dedicated student portal to submit projects for approval, track the review process, and communicate with your supervisors. Simplify project management and focus on what matters most—your work.</p>
+                        <a href="admin-login.php" class="btn btn-danger btn-lg mx-2" style="min-width: 150px;">Admin Login</a>
+
+                    </div>
                 </div>
-                <div class="modal-body">
-                    <form method="POST" action="">
-                        <div class="mb-3">
-                            <label for="registerFirstName" class="form-label">Firstname</label>
-                            <input type="text" class="form-control" id="registerFirstName" name="firstName"
-                                value="<?php echo htmlspecialchars($firstName); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerLastName" class="form-label">Lastname</label>
-                            <input type="text" class="form-control" id="registerLastName" name="lastName"
-                                value="<?php echo htmlspecialchars($lastName); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="registerEmail" name="email"
-                                value="<?php echo htmlspecialchars($email); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPhoneNumber" class="form-label">Phone number</label>
-                            <input type="text" class="form-control" id="registerPhoneNumber" name="phoneNumber"
-                                value="<?php echo htmlspecialchars($phoneNumber); ?>" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="registerPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="registerPassword" name="password" required>
-                        </div>
-                        <button type="submit" name="register" class="btn btn-danger">Register</button>
-                    </form>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.pexels.com/photos/267569/pexels-photo-267569.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="card-img-top" alt="Card image 2">
+                    <div class="card-body">
+                        <h5 class="card-title">Student portal</h5>
+                        <p class="card-text">Admins can review and approve student projects with ease. Manage the approval process, oversee project progress, and ensure timely completions all through a secure portal designed for administrators.</p>
+                        <a href="student-login.php" class="btn btn-primary btn-lg mx-2" style="min-width: 150px;">Student Login</a>
+
+                    </div>
+                </div>
+            </div>
+            <div class="col-md-4">
+                <div class="card">
+                    <img src="https://images.pexels.com/photos/28196491/pexels-photo-28196491/free-photo-of-construction-supervisor.jpeg?auto=compress&cs=tinysrgb&w=600" class="card-img-top" alt="Card image 3">
+                    <div class="card-body">
+                        <h5 class="card-title">Supervisor portal</h5>
+                        <p class="card-text">"Supervisors can access the portal to monitor student progress, provide feedback, and approve project submissions. A streamlined system to facilitate communication and project oversight.</p>
+                        <a href="admin-login.php" class="btn btn-success btn-lg mx-2" style="min-width: 150px;">Supervisor Login</a>
+
+                    </div>
                 </div>
             </div>
         </div>
     </div>
 
-    <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="loginModalLabel">Login</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-                <div class="modal-body">
-                    <form method="POST" action="">
-                        <div class="mb-3">
-                            <label for="loginEmail" class="form-label">Email address</label>
-                            <input type="email" class="form-control" id="loginEmail" name="email" required>
-                        </div>
-                        <div class="mb-3">
-                            <label for="loginPassword" class="form-label">Password</label>
-                            <input type="password" class="form-control" id="loginPassword" name="password" required>
-                        </div>
-                        <button type="submit" name="login" class="btn btn-primary">Login</button>
-                    </form>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <?php include "./components/toasts.php" ?>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/js/bootstrap.bundle.min.js"></script>
-    <script>
-        function clearModal() {
-            document.querySelector('.text-danger').innerHTML = '';
-            document.querySelector('.text-success').innerHTML = '';
-        }
-        document.addEventListener('DOMContentLoaded', function() {
-            const registerToast = document.getElementById('registerToast');
-            const loginToast = document.getElementById('loginToast');
 
-            <?php if ($registerError || $registerSuccess): ?>
-                const toast = new bootstrap.Toast(registerToast);
-                toast.show();
-            <?php endif; ?>
-
-            <?php if ($loginError): ?>
-                const toast = new bootstrap.Toast(loginToast);
-                toast.show();
-            <?php endif; ?>
-        });
-    </script>
-
-    <footer class="text-center mt-5 mb-3">
-        <p>&copy; <?php echo date("Y"); ?> Project Approval System. All rights reserved.</p>
-        <p>Developed by Rugwiro</p>
-    </footer>
 </body>
 
 </html>
