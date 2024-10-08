@@ -32,6 +32,9 @@ $user = $_SESSION['user'];
         <a href="supervisors_list.php">
             <i class="fa fa-users"></i> Supervisors
         </a>
+        <a href="students_list.php">
+            <i class="fa fa-users"></i> Students list
+        </a>
         <a href="assignSupervisor.php">
             <i class="fa fa-user-tag"></i> Supervisor Assignment
         </a>
