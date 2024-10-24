@@ -98,6 +98,7 @@ function formatDate($date)
                                 <th>Title</th>
                                 <th>Description</th>
                                 <th>Project Owner</th>
+                                <th>Project file</th>
                                 <th>Other members</th>
                                 <th>Submitted at</th>
                                 <th>Status</th>
@@ -118,6 +119,9 @@ function formatDate($date)
                                     echo "<td>" . $row['description'] . "</td>";
                                     echo "<td>" . $row['firstname'] . " " . $row['lastname'] . "</td>";
                             ?>
+                                    <td>
+                                        <a href="../assets/projects/<?php echo $row['file_name']; ?>">Download</a>
+                                    </td>
                                     <td>
                                         <?php
                                         $membersResult = mysqli_query($conn, "SELECT * FROM project_members,students WHERE project_id ='" . $row['id'] . "' AND project_members.student_id = students.id");

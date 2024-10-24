@@ -104,7 +104,7 @@ $userId = $_SESSION['user_id'];
                                     echo "<td>" . $row['status'] . "</td>";
                                     ?>
                                     <td>
-                                        <a href='../assets/projects/" . urlencode($row["file_name"]) . "' class='action_button btn btn-primary' download>
+                                        <a href="../assets/projects/<?php echo $row["file_name"]; ?>" class='action_button btn btn-primary' download>
                                             <i class='fa fa-download'></i>
                                         </a>
 

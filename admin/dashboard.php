@@ -111,14 +111,16 @@ $totalAssignedProjects = mysqli_fetch_assoc($totalProjectsAssignedQuery)['totalP
                         } else {
                         ?>
                             <div class="col-md-3">
-                                <div class="card bg-warning text-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Assigned projects</h5>
-                                        <p class="card-text">
-                                            <strong><?php echo $totalAssignedProjects; ?></strong>
-                                        </p>
+                                <a href="./supervisors_projects_list.php">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Assigned projects</h5>
+                                            <p class="card-text">
+                                                <strong><?php echo $totalAssignedProjects; ?></strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php
                         }
