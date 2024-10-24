@@ -63,7 +63,7 @@ $userId = $_SESSION['user_id'];
                             } else {
                             ?>
                                 <tr>
-                                    <td colspan="70">No supervisors found.</td>
+                                    <td colspan="70">No data found.</td>
                                 </tr>
                             <?php
                             }

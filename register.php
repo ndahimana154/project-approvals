@@ -53,7 +53,7 @@ include './php/connect.php';
                 }
             }
         } ?>
-        <form method="POST" action="" class="mt-4">
+        <form method="POST" action="" class="mt-4  w-50">
             <div class="form-group">
                 <label for="firstname">First Name:</label>
                 <input type="text" name="firstname" class="form-control" required>

@@ -63,8 +63,8 @@ function formatDate($date)
     $year = substr($dateTime->format('Y'), -3);
 
     $hours = $dateTime->format('H');
-    $minutes = $dateTime->format('i'); 
-    
+    $minutes = $dateTime->format('i');
+
     return $day . $daySuffix . '.' . $month . '.' . $year . ' ' . $hours . 'h:' . $minutes;
 }
 
@@ -142,12 +142,8 @@ function formatDate($date)
                                             <a href="?action=accept&project_id=<?php echo $row['id']; ?>" class="btn btn-success">Accept</a>
                                         <?php
                                         }
-                                        if ($row['status'] === 'Accepted') {
                                         ?>
-                                            <a href="viewproject_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?php echo $row['id']; ?>">Track progress</a>
-                                        <?php
-                                        }
-                                        ?>
+                                        <a href="viewproject_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#assignModal<?php echo $row['id']; ?>">Track progress</a>
                                     </td>
                                 <?php
                                     echo "</tr>";

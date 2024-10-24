@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Generation Time: Oct 07, 2024 at 03:06 AM
+-- Generation Time: Oct 09, 2024 at 09:49 PM
 -- Server version: 10.4.32-MariaDB
 -- PHP Version: 8.0.30
 
@@ -34,15 +34,6 @@ CREATE TABLE `project_members` (
   `role` varchar(50) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `project_members`
---
-
-INSERT INTO `project_members` (`id`, `project_id`, `student_id`, `role`) VALUES
-(1, 2, 5, 'COntent creator'),
-(2, 2, 5, 'COntent creator'),
-(3, 2, 7, 'COntent creator');
-
 -- --------------------------------------------------------
 
 --
@@ -58,20 +49,6 @@ CREATE TABLE `project_progress` (
   `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
   `supervisor_comment` text DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `project_progress`
---
-
-INSERT INTO `project_progress` (`id`, `project_id`, `student_id`, `progress_text`, `screenshot`, `created_at`, `supervisor_comment`) VALUES
-(1, 16, 3, 'refrefre', '', '2024-10-07 00:21:29', NULL),
-(2, 16, 3, 'edcwecew', '', '2024-10-07 00:22:01', NULL),
-(3, 16, 3, 'dcdsdd', '1728260682_aaa.jpg', '2024-10-07 00:24:42', NULL),
-(4, 16, 3, 'dcdsdd', '1728260808_e87de422a5.jpg', '2024-10-07 00:26:48', NULL),
-(5, 16, 3, 'dcdsdd', '1728260901_021467ec39.jpg', '2024-10-07 00:28:21', NULL),
-(6, 16, 3, 'dcdsdd', '1728261058_59fdc602c5.jpg', '2024-10-07 00:30:58', NULL),
-(7, 7, 3, 'dfefrfer', '1728261625_1c5bfa2b0d.jpg', '2024-10-07 00:40:25', 'New comment can be add?'),
-(9, 17, 3, 'fefcre', '1728262515_67b52134ed.jpg', '2024-10-07 00:55:15', 'rerefd fdvf');
 
 -- --------------------------------------------------------
 
@@ -91,17 +68,6 @@ CREATE TABLE `students` (
   `profilepicture` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `students`
---
-
-INSERT INTO `students` (`id`, `firstname`, `lastname`, `email`, `phone`, `password`, `regno`, `class`, `profilepicture`) VALUES
-(3, 'dd', 'aaff', 'ndahimana154@gmail.com', '0788923011', '$2y$10$FJQrqe0ubUfiLNy5ZjPu1e9P.mXZTSbu8VLIolF6AjCU4MLQEGWRC', 'PWO220', '1234', '3_1728209043.png'),
-(4, 'Bonheur', 'NDAHIMANA', 'ndahimana1534@gmail.com', '0788923011', '$2y$10$sIx65i0azJyBAlV7ZqIjheuGlHOOr1MOuYMndpFVz4yn3p3xqvlQG', '', '', ''),
-(5, 'woij', 'oijoij', 'ojiojoi@efefe.efef', 'opkjij', '$2y$10$5XCB/r0d5BttidFVLPX/xuXhi4n1gk3jQAYO0E041L5WphGv1SFz6', NULL, NULL, NULL),
-(6, 'ioj', 'oijiojiojio', 'ijoi@rvr.rvrf', '2939', '$2y$10$ZykZZ9vOovRXvBdzCP4kB.BSMM7nYQj1TH0vF.sOvs.UuoUAneU5y', NULL, NULL, NULL),
-(7, 'qoij', 'ioj', 'iojiojioj@ee.e', 'opj', '$2y$10$tG3xhej4Svwz.rKO9jKW4ehU.BK/Uvq3C1dLbL0UiZNo4eo1.yDoq', NULL, NULL, NULL);
-
 -- --------------------------------------------------------
 
 --
@@ -118,29 +84,6 @@ CREATE TABLE `studentsprojects` (
   `created_at` varchar(255) NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
---
--- Dumping data for table `studentsprojects`
---
-
-INSERT INTO `studentsprojects` (`id`, `title`, `description`, `file_name`, `student_id`, `status`, `created_at`) VALUES
-(1, 'dfW', 'JNIUN', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'Rejected', '2024-10-06 02:56:08'),
-(2, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'Accepted', '2024-10-06 02:56:08'),
-(3, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'Accepted', '2024-10-06 02:56:08'),
-(4, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'Rejected', '2024-10-06 02:56:08'),
-(5, 'oeij', 'iojioj oij', 'BOOKS.YOSSR.COM-Finish-What-You-Start.pdf', 3, 'Rejected', '2024-10-06 02:56:08'),
-(6, 'efoij', 'iojiofjvio', 'user.png', 3, 'pending', '2024-10-06 02:56:08'),
-(7, 'sdowij', 'iojiojio', 'user.png', 3, 'pending', '2024-10-06 02:56:08'),
-(8, 'kljm', 'ojmoijoio', 'Screenshot 2024-10-06 at 01.47.18.png', 3, 'pending', '2024-10-06 02:56:08'),
-(9, 'dwjn', 'inijio', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'Rejected', '2024-10-06 02:56:08'),
-(10, 'doij', 'oijiojoi', 'Screenshot 2024-09-05 at 11.52.17.png', 3, 'pending', '2024-10-06 02:56:08'),
-(11, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'pending', '2024-10-06 02:56:26'),
-(12, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'pending', '2024-10-06 02:57:05'),
-(13, 'dcd', 'erfefe', 'Parfait ERD.pdf', 3, 'Accepted', '2024-10-06 02:57:09'),
-(14, 'ewfe', 'eew', '6701e0f253fee8.60724094_27603 KWIZERA Parfait Assignement_DBMS.pdf', 3, 'rejected', '2024-10-06 02:59:30'),
-(15, 'ewfre', 'erfer', '6701e15a225be5.28444404_27603 KWIZERA Parfait Assignement_DBMS.pdf', 3, 'Rejected', '2024-10-06 03:01:14'),
-(16, 'fijh', 'iuhuihui', '670263c36bdb03.17017813_BAG_Presentation..pptx', 3, 'pending', '2024-10-06 12:17:39'),
-(17, 'ddfcd', 'dsdsc', '67026d5654af17.10780632_LaravelTaskv12.txt', 3, 'Accepted', '2024-10-06 12:58:30');
-
 -- --------------------------------------------------------
 
 --
@@ -153,16 +96,6 @@ CREATE TABLE `supervisor_project_assignment` (
   `project_id` int(11) NOT NULL,
   `assigned_date` timestamp NOT NULL DEFAULT current_timestamp()
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
-
---
--- Dumping data for table `supervisor_project_assignment`
---
-
-INSERT INTO `supervisor_project_assignment` (`id`, `supervisor_id`, `project_id`, `assigned_date`) VALUES
-(1, 3, 10, '2024-10-06 17:28:18'),
-(2, 3, 14, '2024-10-06 17:28:34'),
-(3, 6, 6, '2024-10-07 00:03:54'),
-(4, 6, 7, '2024-10-07 00:03:59');
 
 -- --------------------------------------------------------
 
@@ -183,12 +116,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `names`, `email`, `password`, `role`) VALUES
-(1, 'NN', 'bonheurndahimana125@gmail.com', '1234', 'admin'),
-(2, '1fvdd', 'bonheurndahimana125@gmail.com', '$2y$10$DrPx6vU9AWHgSwymbjqugePjE6obxDyCt.F52G.nqJ7RxuaW6DWjC', 'supervisor'),
-(3, 'dfcdcfd', 'bonheurndahima334na125@gmail.com', '$2y$10$GG7MRVCgSyNND1BzvkCz.uPz6MUyv7oViOySKC65d5fymj0hdgWB.', 'supervisor'),
-(4, 'efeww', 'bonheureewewndahimana125@gmail.com', '$2y$10$92EEwXsCgIiMHcrr.HqNmO/WR86xjqeuOlkUjZANl4tEUdgAKak92', 'supervisor'),
-(5, 'super', 'super@gmail.com', '$2y$10$wXVX2wZoApEeGhS25yASLOO.ayDmBbov9e7K0E7si8ISMDlUG3W62', 'supervisor'),
-(6, 'switch', 'superswitch@gmail.com', '1234', 'supervisor');
+(7, 'admin', 'admin123@gmail.com', '1234', 'admin');
 
 --
 -- Indexes for dumped tables
@@ -245,37 +173,37 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT for table `project_members`
 --
 ALTER TABLE `project_members`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT for table `project_progress`
 --
 ALTER TABLE `project_progress`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=13;
 
 --
 -- AUTO_INCREMENT for table `students`
 --
 ALTER TABLE `students`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT for table `studentsprojects`
 --
 ALTER TABLE `studentsprojects`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=18;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT for table `supervisor_project_assignment`
 --
 ALTER TABLE `supervisor_project_assignment`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT for table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Constraints for dumped tables

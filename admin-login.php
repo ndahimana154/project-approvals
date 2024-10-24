@@ -55,7 +55,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             <div class="alert alert-danger"><?php echo $error; ?></div>
         <?php endif; ?>
 
-        <form method="POST" action="">
+        <form method="POST" action="" class=" w-50">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" name="email" class="form-control" required>

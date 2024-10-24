@@ -43,7 +43,7 @@ include './php/connect.php';
             }
         }
         ?>
-        <form method="POST" action="" class="mt-4">
+        <form method="POST" action="" class="mt-4 w-50">
             <div class="form-group">
                 <label for="email">Email:</label>
                 <input type="email" name="email" class="form-control" required>
