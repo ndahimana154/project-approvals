@@ -40,64 +40,101 @@ $userId = $_SESSION['user_id'];
 
 <body>
     <div class="container-fluid">
-        <div class="row">
+        <div class="row flex-nowrap">
             <?php include "../components/adminSidebar.php"; ?>
 
-            <div class="col-md-10">
-                <div class="dashboard-header">
-                    <h1 class="">Track progress</h1>
-                </div>
-                <hr>
-                <h3>Progress History</h3>
+            <div class="col-md-10 p-4">
+                <div class="card shadow-sm">
+                    <div class="card-header d-flex justify-content-between align-items-center">
+                        <h1 class="h3 mb-0">Track Project Progress</h1>
+                        <div>
+                            <button class="btn btn-outline-success" onclick="printProgress()">
+                                <i class="fa fa-print"></i> Print Progress
+                            </button>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <h3 class="mb-4">Progress History</h3>
+                        <ul class="list-group" id="progressHistory">
+                            <?php
+                            $projectId = $_GET['project_id'];
+                            $progressSql = "SELECT * FROM project_progress WHERE project_id = '$projectId' ORDER BY created_at DESC";
+                            $progressResult = mysqli_query($conn, $progressSql);
 
-                <button class="btn btn-success mb-3" onclick="printProgress()">
-                    <i class="fa fa-print"></i>
-                    Print Progress</button>
+                            if (mysqli_num_rows($progressResult) > 0) {
+                                while ($row = mysqli_fetch_assoc($progressResult)) {
+                                    echo "<li class='list-group-item mb-3'>";
+                                    echo "<div class='d-flex justify-content-between align-items-start'>";
+                                    echo "<div>";
+                                    echo "<strong>Date:</strong> " . $row['created_at'] . "<br>";
+                                    echo "<strong>Progress:</strong> " . htmlspecialchars($row['progress_text']) . "<br>";
+                                    if ($row['screenshot']) {
+                                        echo "<strong>Screenshot:</strong><br> <img src='../assets/project_progress/" . htmlspecialchars($row['screenshot']) . "' alt='Screenshot' class='img-thumbnail' width='150'><br>";
+                                    }
+                                    if ($row['comment_file']) {
+                                        echo "<strong>Uploaded File:</strong><br><a href='" . htmlspecialchars($row['comment_file']) . "' target='_blank' download>Download file</a><br>";
+                                    }
+                                    echo "<strong>Supervisor's Comment:</strong> " . htmlspecialchars($row['supervisor_comment']);
+                                    echo "</div>";
+                                    echo "</div>";
 
-                <ul class="list-group" id="progressHistory">
-                    <?php
-                    $projectId = $_GET['project_id'];
-                    $progressSql = "SELECT * FROM project_progress WHERE project_id = '$projectId' ORDER BY created_at DESC";
-                    $progressResult = mysqli_query($conn, $progressSql);
+                                    // Form for adding supervisor comments and file upload
+                                    echo "<form action='' method='POST' enctype='multipart/form-data' class='mt-3'>";
+                                    echo "<input type='hidden' name='progress_id' value='" . $row['id'] . "'>";
+                                    echo "<div class='mb-3'>";
+                                    echo "<label for='supervisor_comment_" . $row['id'] . "' class='form-label'>Add Comment</label>";
+                                    echo "<textarea class='form-control' id='supervisor_comment_" . $row['id'] . "' name='supervisor_comment' rows='2'>" . htmlspecialchars($row['supervisor_comment']) . "</textarea>";
+                                    echo "</div>";
+                                    echo "<div class='mb-3'>";
+                                    echo "<label for='file_" . $row['id'] . "' class='form-label'>Attach File</label>";
+                                    echo "<input type='file' class='form-control' id='file_" . $row['id'] . "' name='comment_file'>";
+                                    echo "</div>";
+                                    echo "<button type='submit' class='btn btn-primary'>Submit Comment</button>";
+                                    echo "</form>";
 
-                    if (mysqli_num_rows($progressResult) > 0) {
-                        while ($row = mysqli_fetch_assoc($progressResult)) {
-                            echo "<li class='list-group-item'>";
-                            echo "<strong>Date:</strong> " . $row['created_at'] . "<br>";
-                            echo "<strong>Progress:</strong> " . htmlspecialchars($row['progress_text']) . "<br>";
-                            if ($row['screenshot']) {
-                                echo "<strong>Screenshot:</strong> <img src='../assets/project_progress/" . htmlspecialchars($row['screenshot']) . "' alt='Screenshot' width='100'><br>";
-                            }
-                            echo "<strong>Supervisor's Comment:</strong> " . htmlspecialchars($row['supervisor_comment']);
+                                    // Handle the comment and file submission
+                                    if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['supervisor_comment']) && isset($_POST['progress_id'])) {
+                                        $supervisorComment = mysqli_real_escape_string($conn, $_POST['supervisor_comment']);
+                                        $progressId = $_POST['progress_id'];
 
-                            echo "<form action='' method='POST' class='mt-2'>";
-                            echo "<input type='hidden' name='progress_id' value='" . $row['id'] . "'>";
-                            echo "<div class='mb-3'>";
-                            echo "<label for='supervisor_comment_" . $row['id'] . "' class='form-label'>Add Comment</label>";
+                                        $uploadDir = '../assets/project_files/'; // Directory where files will be uploaded
+                                        $filePath = '';
 
-                            echo "<textarea class='form-control' id='supervisor_comment_" . $row['id'] . "' name='supervisor_comment' rows='2'>" . htmlspecialchars($row['supervisor_comment']) . "</textarea>";
-                            echo "</div>";
-                            echo "<button type='submit' class='btn btn-secondary'>Submit Comment</button>";
-                            echo "</form>";
+                                        // Check if a file is uploaded
+                                        if (isset($_FILES['comment_file']) && $_FILES['comment_file']['error'] == 0) {
+                                            $fileName = basename($_FILES['comment_file']['name']);
+                                            $filePath = $uploadDir . time() . "_" . $fileName; // Create a unique filename
 
-                            if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['supervisor_comment']) && isset($_POST['progress_id'])) {
-                                $supervisorComment = mysqli_real_escape_string($conn, $_POST['supervisor_comment']);
-                                $progressId = $_POST['progress_id'];
+                                            // Move uploaded file to the target directory
+                                            if (move_uploaded_file($_FILES['comment_file']['tmp_name'], $filePath)) {
+                                                $filePath = mysqli_real_escape_string($conn, $filePath); // Escape for database
+                                            } else {
+                                                echo "<p class='alert alert-danger mt-2'>File upload failed.</p>";
+                                            }
+                                        }
 
-                                $commentSql = "UPDATE project_progress SET supervisor_comment='$supervisorComment' WHERE id='$progressId'";
-                                if (mysqli_query($conn, $commentSql)) {
-                                    echo "<p class='alert alert-success'>Comment added successfully.</p>";
-                                } else {
-                                    echo "<p class='alert alert-danger'>Comment addition failed: " . mysqli_error($conn) . "</p>";
+                                        // Update the database with the supervisor's comment and file path (if any)
+                                        $commentSql = "UPDATE project_progress SET supervisor_comment='$supervisorComment'";
+                                        if ($filePath) {
+                                            $commentSql .= ", comment_file='$filePath'";
+                                        }
+                                        $commentSql .= " WHERE id='$progressId'";
+
+                                        if (mysqli_query($conn, $commentSql)) {
+                                            echo "<p class='alert alert-success mt-2'>Comment and file added successfully.</p>";
+                                        } else {
+                                            echo "<p class='alert alert-danger mt-2'>Comment addition failed: " . mysqli_error($conn) . "</p>";
+                                        }
+                                    }
+                                    echo "</li>";
                                 }
+                            } else {
+                                echo "<li class='list-group-item'>No progress updates yet.</li>";
                             }
-                            echo "</li>";
-                        }
-                    } else {
-                        echo "<li class='list-group-item'>No progress updates yet.</li>";
-                    }
-                    ?>
-                </ul>
+                            ?>
+                        </ul>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
