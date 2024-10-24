@@ -49,7 +49,7 @@ $userId = $_SESSION['user_id']; // Get the supervisor's user ID from the session
                         </thead>
                         <tbody>
                             <?php
-                            $query = "SELECT sp.id, sp.title,sp.description, sp.status, spa.assigned_date, 
+                            $query = "SELECT sp.id, sp.title,sp.description, sp.status,sp.file_name, spa.assigned_date, 
                                       s.firstname, s.lastname
                                       FROM studentsProjects sp
                                       JOIN students s ON sp.student_id = s.id
@@ -71,6 +71,7 @@ $userId = $_SESSION['user_id']; // Get the supervisor's user ID from the session
                                     echo "<td>" . $row['assigned_date'] . "</td>";
                             ?>
                                     <td>
+                                        <a href="../assets/projects/<?php echo $row['file_name']; ?>" class="btn btn-primary"><i class="fa fa-download"></i></a>
                                         <a href="viewproject_progress.php?project_id=<?php echo $row['id']; ?>" class="btn btn-sm btn-info">View progress</a>
 
                                     </td>
