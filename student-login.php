@@ -53,7 +53,9 @@ include './php/connect.php';
                 <label for="password">Password:</label>
                 <input type="password" name="password" class="form-control" required>
             </div>
-
+            <p>
+                <a href="./forgot_password.php">Forgot password?</a>
+            </p>
             <button type="submit" class="btn btn-primary">Login</button>
         </form>
     </div>
