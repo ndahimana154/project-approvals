@@ -57,47 +57,55 @@ $totalAssignedProjects = mysqli_fetch_assoc($totalProjectsAssignedQuery)['totalP
                         if ($user["role"] === 'admin') {
                         ?>
                             <div class="col-md-3">
-                                <div class="card bg-primary text-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Total Projects</h5>
-                                        <p class="card-text">
-                                            <strong><?php echo $totalProjects; ?></strong>
-                                        </p>
+                                <a href="projects_list.php">
+                                    <div class="card bg-primary text-white">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Total Projects</h5>
+                                            <p class="card-text">
+                                                <strong><?php echo $totalProjects; ?></strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-3">
-                                <div class="card bg-warning text-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Pending Projects</h5>
-                                        <p class="card-text">
-                                            <strong><?php echo $pendingProjects; ?></strong>
-                                        </p>
+                                <a href="projects_list.php">
+                                    <div class="card bg-warning text-white">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Pending Projects</h5>
+                                            <p class="card-text">
+                                                <strong><?php echo $pendingProjects; ?></strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                             <div class="col-md-3">
-                                <div class="card bg-success text-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">Total Students</h5>
-                                        <p class="card-text">
-                                            <strong><?php echo $totalStudents; ?></strong>
-                                        </p>
+                                <a href="students_list.php">
+                                    <div class="card bg-success text-white">
+                                        <div class="card-body">
+                                            <h5 class="card-title">Total Students</h5>
+                                            <p class="card-text">
+                                                <strong><?php echo $totalStudents; ?></strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
 
                             <div class="col-md-3">
-                                <div class="card bg-danger text-white">
-                                    <div class="card-body">
-                                        <h5 class="card-title">System users</h5>
-                                        <p class="card-text">
-                                            <strong>
-                                                <?php echo $totalSystemUsers - 1 ?>
-                                            </strong>
-                                        </p>
+                                <a href="supervisors_list.php">
+                                    <div class="card bg-danger text-white">
+                                        <div class="card-body">
+                                            <h5 class="card-title">System users</h5>
+                                            <p class="card-text">
+                                                <strong>
+                                                    <?php echo $totalSystemUsers - 1 ?>
+                                                </strong>
+                                            </p>
+                                        </div>
                                     </div>
-                                </div>
+                                </a>
                             </div>
                         <?php
                         } else {

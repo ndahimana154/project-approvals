@@ -142,7 +142,7 @@ include './php/connect.php';
                 </div>
                 <div class="carousel-inner">
                     <div class="carousel-item active">
-                        <img src="https://images.pexels.com/photos/9242849/pexels-photo-9242849.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 1">
+                        <img src="./assets/images/1.jpg" class="d-block w-100" alt="Slide 1">
                         <div class="carousel-caption">
                             <h3>Streamlined Project Approvals</h3>
                             <p>Efficiently manage and approve student projects with ease.</p>
@@ -150,7 +150,7 @@ include './php/connect.php';
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="https://images.pexels.com/photos/7868838/pexels-photo-7868838.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 2">
+                        <img src="./assets/images/5.jpg" class="d-block w-100" alt="Slide 2">
                         <div class="carousel-caption">
                             <h3>Secure and Easy Access</h3>
                             <p>Admins and students can access the system with secure login options.</p>
@@ -158,7 +158,7 @@ include './php/connect.php';
                         </div>
                     </div>
                     <div class="carousel-item">
-                        <img src="https://images.pexels.com/photos/733856/pexels-photo-733856.jpeg?auto=compress&cs=tinysrgb&w=1260&h=750&dpr=1" class="d-block w-100" alt="Slide 3">
+                        <img src="./assets/images/6.jpg" class="d-block w-100" alt="Slide 3">
                         <div class="carousel-caption">
                             <h3>Register New Students</h3>
                             <p>Students can register and submit projects for quick approval.</p>
