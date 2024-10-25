@@ -13,7 +13,6 @@ $userId = $_SESSION['user_id'];
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -32,7 +31,7 @@ $userId = $_SESSION['user_id'];
                 <div class="dashboard-header py-4">
                     <h1 class="text-primary">Track Project Progress</h1>
                 </div>
-                
+
                 <!-- Success/Error Messages -->
                 <?php
                 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
@@ -78,8 +77,9 @@ $userId = $_SESSION['user_id'];
                         <textarea class="form-control" id="progress_text" name="progress_text" rows="3" required placeholder="Describe your progress..."></textarea>
                     </div>
                     <div class="mb-3">
-                        <label for="screenshot" class="form-label">Upload Screenshot (optional)</label>
-                        <input type="file" class="form-control" id="screenshot" name="screenshot" accept="image/*">
+                        <label for="screenshot" class="form-label">Upload Progress File (optional)</label>
+                        <!-- Accept any file type -->
+                        <input type="file" class="form-control" id="screenshot" name="screenshot">
                     </div>
                     <input type="hidden" name="project_id" value="<?php echo $_GET['project_id']; ?>">
                     <button type="submit" class="btn btn-primary">Submit Progress</button>
@@ -102,8 +102,15 @@ $userId = $_SESSION['user_id'];
                             echo "<strong>Progress:</strong> " . htmlspecialchars($row['progress_text']) . "<br>";
                             
                             if ($row['screenshot']) {
-                                echo "<strong>Screenshot:</strong><br>";
-                                echo "<img src='../assets/project_progress/" . htmlspecialchars($row['screenshot']) . "' alt='Screenshot' class='img-thumbnail my-2' width='150'><br>";
+                                $filePath = '../assets/project_progress/' . htmlspecialchars($row['screenshot']);
+                                $fileExtension = pathinfo($filePath, PATHINFO_EXTENSION);
+
+                                echo "<strong>Uploaded File:</strong><br>";
+                                if (in_array(strtolower($fileExtension), ['jpg', 'jpeg', 'png', 'gif'])) {
+                                    echo "<img src='$filePath' alt='Screenshot' class='img-thumbnail my-2' width='150'><br>";
+                                } else {
+                                    echo "<a href='$filePath' download class='btn btn-outline-primary my-2'>Download</a>";
+                                }
                             }
 
                             // Display supervisor comment and file if available
